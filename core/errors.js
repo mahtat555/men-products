@@ -8,5 +8,10 @@ const invalidJsonFormat = (error, req, res, next) => {
   }
 }
 
+// 404 NotFound Error
+const notFound = (req, res) => {
+  res.status(404).json({ "message": "Not Found" })
+}
 
-export { invalidJsonFormat }
+
+export { invalidJsonFormat, notFound }

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 
 const VariantSchema = new mongoose.Schema({
-  productId: {
+  product_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'
   },

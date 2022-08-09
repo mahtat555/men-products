@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 
 import dbConnection from "./core/db.js"
 import { invalidJsonFormat } from './core/errors.js'
+import apiRoutes from "./src/routes/index.js"
 
 /* Get the configuration from the .env file */
 dotenv.config()
@@ -18,8 +19,8 @@ app.use(bodyParser.json({ type: () => true, }));
 
 /* Enable CORS */
 
-/* Routes */
-
+/* API Routes */
+app.use('/api/', apiRoutes)
 
 // Handling the 'Invalid Json Format' errors
 app.use(invalidJsonFormat)
