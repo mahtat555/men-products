@@ -1,0 +1,15 @@
+{
+  "name": "nextgrowth",
+  "version": "1.0.0",
+  "description": "Nextgrowth Backend Exercice",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Yassin Mahtat",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.5.1"
+  }
+}

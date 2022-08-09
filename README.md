@@ -1,0 +1,6 @@
+# Nextgrowth Backend Exercice
+
+## Usage
+
+```
+```
