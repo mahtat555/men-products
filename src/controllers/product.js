@@ -1,53 +1,89 @@
+import Product from '../models/product.js'
+import Variant from '../models/variant.js'
+
+
 /**
  * Retrieve the List of products
  */
-const ListProducts = (req, res) => {
-  // Todo ...
+export const listProducts = async (req, res) => {
+  const products = await Product.find();
+  res.status(200).json(products);
 }
 
 /**
  * Create a new product
  */
-const createProduct = (req, res) => {
-  // Todo ...
+export const createProduct = async (req, res) => {
+  // Data validation
+  // ...
+
+  const product = await Product.create(req.body);
+  res.status(201).json(product);
 }
 
 /**
  * Delete a specific Product
  */
-const deleteProduct = (req, res) => {
-  // Todo ...
+export const deleteProduct = async (req, res) => {
+  const product_id = req.params.product_id
+  const product = await Product.findByIdAndDelete(product_id)
+
+  if (product) {
+    res.status(200).json(product)
+  } else {
+    res.status(404).json({ "error": `No product found with ID ${product_id} !!` })
+  }
 }
 
 /**
  * Update a specific Product
  */
-const updateProduct = (req, res) => {
-  // Todo ...
+export const updateProduct = async (req, res) => {
+  // Data validation
+  // ...
+
+  const product_id = req.params.product_id
+  let product = await Product.findByIdAndUpdate(product_id, req.body)
+
+  if (product) {
+    product = await Product.findById(product_id)
+    res.status(200).json(product);
+  } else {
+    res.status(404).json({ "error": `No product found with ID ${product_id} !!` })
+  }
 }
 
 /**
  * Retrieve the List of variants of a specific product
  */
-const listVariants = (req, res) => {
-  // Todo ...
+export const listVariants = async (req, res, next) => {
+  const product_id = req.params.product_id
+
+  const variants = await Variant.find({ product_id: product_id })
+  res.status(200).json(variants);
 }
 
 /**
  * Retrieve a specific variant of a specific product
  */
-const retrieveVariant = (req, res) => {
-  // Todo ...
+export const retrieveVariant = async (req, res) => {
+  const product_id = req.params.product_id
+  const variant_id = req.params.variant_id
+
+  const variants = await Variant.find({ product_id: product_id, _id: variant_id })
+  res.status(200).json(variants);
 }
 
 /**
- * Retrieve the List of products
+ * Retrieve a specific product
  */
-const retrieveProduct = (req, res) => {
-  // Todo ...
-}
+export const retrieveProduct = async (req, res) => {
+  const product_id = req.params.product_id
+  const product = await Product.findById(product_id)
 
-export {
-  ListProducts, createProduct, deleteProduct, updateProduct, listVariants,
-  retrieveVariant, retrieveProduct
+  if (product) {
+    res.status(200).json(product)
+  } else {
+    res.status(404).json({ "error": `No product found with ID ${product_id} !!` })
+  }
 }

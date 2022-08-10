@@ -1,9 +1,10 @@
 import express from "express"
 import bodyParser from "body-parser"
+import cors from "cors"
 import dotenv from 'dotenv'
 
 import dbConnection from "./core/db.js"
-import { invalidJsonFormat } from './core/errors.js'
+import { errorHandler } from './core/errors.js'
 import apiRoutes from "./src/routes/index.js"
 
 /* Get the configuration from the .env file */
@@ -18,12 +19,14 @@ const app = express()
 app.use(bodyParser.json({ type: () => true, }));
 
 /* Enable CORS */
+app.use(cors());
 
 /* API Routes */
 app.use('/api/', apiRoutes)
 
-// Handling the 'Invalid Json Format' errors
-app.use(invalidJsonFormat)
+// Handling the errors
+app.use(errorHandler)
+
 
 /* Database Connection */
 dbConnection(MONGODB_URL, () => {

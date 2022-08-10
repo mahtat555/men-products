@@ -4,7 +4,7 @@ import * as productController from "../controllers/product.js";
 const router = express.Router();
 
 // Retrieve the List of products
-router.get("", productController.ListProducts)
+router.get("", productController.listProducts)
 
 // Add new product
 router.post("", productController.createProduct)
