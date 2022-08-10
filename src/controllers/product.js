@@ -1,5 +1,6 @@
 import Product from '../models/product.js'
 import Variant from '../models/variant.js'
+import productValidation from "../validations/product.js"
 import { checkProductExists } from '../services/product.js';
 
 
@@ -14,14 +15,20 @@ export const listProducts = async (req, res) => {
 /**
  * Create a new product
  */
-export const createProduct = async (req, res) => {
+export const createProduct = async (req, res, next) => {
+  let data = req.body;
+
   // Data validation
-  // ...
+  try {
+    data = productValidation.createValidation(data)
+  } catch (error) {
+    return next(error);
+  }
 
   try {
-    const product = await Product.create(req.body);
+    const product = await Product.create(data);
     res.status(201).json(product);
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
@@ -40,7 +47,7 @@ export const deleteProduct = async (req, res) => {
     } else {
       res.status(404).json({ "error": `No product found with ID ${product_id} !!` })
     }
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
@@ -48,14 +55,19 @@ export const deleteProduct = async (req, res) => {
 /**
  * Update a specific Product
  */
-export const updateProduct = async (req, res) => {
-  // Data validation
-  // ...
-
+export const updateProduct = async (req, res, next) => {
+  let data = req.body;
   const product_id = req.params.product_id
 
+  // Data validation
   try {
-    let product = await Product.findByIdAndUpdate(product_id, req.body)
+    data = productValidation.updateValidation(data)
+  } catch (error) {
+    return next(error);
+  }
+
+  try {
+    let product = await Product.findByIdAndUpdate(product_id, data)
 
     if (product) {
       product = await Product.findById(product_id)
@@ -63,7 +75,7 @@ export const updateProduct = async (req, res) => {
     } else {
       res.status(404).json({ "error": `No product found with ID ${product_id} !!` })
     }
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
