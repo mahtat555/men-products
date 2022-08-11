@@ -28,7 +28,6 @@ app.use('/api/', apiRoutes)
 // Handling the errors
 app.use(errorHandler)
 
-
 /* Database Connection */
 dbConnection(MONGODB_URL, () => {
   // Start the App on a specific port

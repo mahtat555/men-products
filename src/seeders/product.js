@@ -55,6 +55,7 @@ const seeder = async () => {
   })
 
   console.log('The seeding was completed successfully')
+  process.exit(0)
 }
 
 

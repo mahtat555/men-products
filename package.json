@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "seed": "node src/seeders/product.js"
+    "db:seed": "node src/seeders/product.js"
   },
   "author": "Yassin Mahtat",
   "license": "ISC",
