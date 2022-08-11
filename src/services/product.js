@@ -7,7 +7,7 @@ import { APIError } from '../../core/errors.js'
 export const checkProductExists = async (product_id) => {
   const product = await Product.findById(product_id)
   if (!product) {
-    throw new APIError(404, { error: `No product found with ID ${product_id} !!` })
+    throw new APIError(404, `No product found with ID ${product_id} !!`)
   }
 }
 
@@ -17,8 +17,6 @@ export const checkProductExists = async (product_id) => {
  */
 export const checkVariantBelongsProduct = (variant, product_id) => {
   if (variant.product_id != product_id) {
-    throw new APIError(403, {
-      error: `You don't have the access to this variant ID ${variant.id} !!`
-    })
+    throw new APIError(403, `You don't have the access to this variant ID ${variant.id} !!`)
   }
 }

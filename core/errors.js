@@ -5,8 +5,26 @@ class APIError extends Error {
   constructor(status = 500, message = "Server Error") {
     super(JSON.stringify({ status, message }))
     this.status = status
-    this.message = message
+    this.message = { error: message }
     this.type = "api-error"
+  }
+}
+
+/**
+ * Bad Request error handler
+ */
+class BadRequest extends APIError {
+  constructor(status = 400, message = "Bad Request") {
+    super(status, message)
+  }
+}
+
+/**
+ * Authentication error handler
+ */
+class NotAuth extends APIError {
+  constructor(status = 401, message = "Authentication Failed") {
+    super(status, message)
   }
 }
 
@@ -14,7 +32,7 @@ class APIError extends Error {
  * Handling the 'Not Found 404' error
  */
 const notFound = (req, res) => {
-  res.status(404).json({error: "404 | Not Found"})
+  res.status(404).json({ error: "404 | Not Found" })
 }
 
 /**
@@ -29,8 +47,10 @@ const errorHandler = (error, req, res, next) => {
   // Catch all errors
   if (error.type == "api-error") {
     res.status(error.status).send(error.message)
+  } else {
+    res.status(500).send(error.message)
   }
 }
 
 
-export { APIError, notFound, errorHandler }
+export { APIError, BadRequest, NotAuth, notFound, errorHandler }

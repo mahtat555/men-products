@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { APIError } from "./errors.js"
+import { BadRequest } from "./errors.js"
 
 
 class Validation {
@@ -41,7 +41,7 @@ class Validation {
     schema = Joi.object(schema);
     const result = schema.validate(data);
     if (result.error) {
-      throw new APIError(400, result.error.details)
+      throw new BadRequest(400, result.error.details)
     }
     return result.value;
   }

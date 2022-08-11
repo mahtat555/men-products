@@ -1,11 +1,7 @@
-import dotenv from 'dotenv'
-
+import "../../core/config.js"
 import dbConnection from "../../core/db.js"
 import Prodcut from "../models/product.js"
 import Variant from "../models/variant.js"
-
-/* Get the configuration from the .env file */
-dotenv.config()
 
 
 const seeder = async () => {
@@ -62,4 +58,4 @@ const seeder = async () => {
 }
 
 
-dbConnection(process.env.MONGODB_URL, () => {})
+dbConnection(process.env.MONGODB_URL, seeder)
