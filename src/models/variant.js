@@ -9,6 +9,7 @@ const VariantSchema = new mongoose.Schema({
   sku: {
     type: String,
     required: true,
+    unique: true
   },
   specification: {
     type: String,

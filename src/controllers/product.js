@@ -1,7 +1,5 @@
 import Product from '../models/product.js'
-import Variant from '../models/variant.js'
 import productValidation from "../validations/product.js"
-import { checkProductExists } from '../services/product.js';
 
 
 /**
@@ -78,41 +76,6 @@ export const updateProduct = async (req, res, next) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
-
-/**
- * Retrieve the List of variants of a specific product
- */
-export const listVariants = async (req, res, next) => {
-  const product_id = req.params.product_id
-
-  //  Check if the product exists
-  try {
-    await checkProductExists(product_id)
-  } catch (error) {
-    return next(error)
-  }
-
-  const variants = await Variant.find({ product_id: product_id })
-  res.status(200).json(variants);
-}
-
-/**
- * Retrieve a specific variant of a specific product
- */
-export const retrieveVariant = async (req, res, next) => {
-  const product_id = req.params.product_id
-  const variant_id = req.params.variant_id
-
-  //  Check if the product exists
-  try {
-    await checkProductExists(product_id)
-  } catch (error) {
-    return next(error)
-  }
-
-  const variants = await Variant.find({ product_id: product_id, _id: variant_id })
-  res.status(200).json(variants);
 }
 
 /**
